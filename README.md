@@ -1,6 +1,6 @@
 ![ratste_logo](./images/ratste.png)
 
-# rat-by-raste
+# ratste
 General purpose Remote Access Tool written in Python3.
 
 ...WIP...
