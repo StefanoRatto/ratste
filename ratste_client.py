@@ -32,11 +32,16 @@ try:
     RHOST = str(sys.argv[1])
     RPORT = int(sys.argv[2])
 except:
+    #print 'Usage: ./ratste_client.py <server_ip> <server_port>'
     sys.exit(1)
 
 def main():
-    s = socket.socket()
-    s.connect((RHOST, RPORT))
+    
+    try:
+        s = socket.socket()
+        s.connect((RHOST, RPORT))
+    except:
+        sys.exit(1)
 
     while True:
         data = s.recv(1024)
