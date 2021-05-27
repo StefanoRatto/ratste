@@ -30,7 +30,6 @@ try:
     RHOST = str(sys.argv[1])
     RPORT = int(sys.argv[2])
 except:
-    #print 'Usage: ./ratste_client.py <server_ip> <server_port>'
     #sys.exit(1)
     RHOST = '127.0.0.1'
     RPORT = 7261

@@ -29,8 +29,11 @@ try:
     LHOST = str(sys.argv[1])
     LPORT = int(sys.argv[2])
 except:
-    print 'Usage: ./ratste_server.py <local_ip> <local_port>'
-    sys.exit(1)
+    print 'ratste > usage: ./ratste_server.py <local_ip> <local_port>'
+    #sys.exit(1)
+    print 'ratste > using default host (127.0.0.1) and port (7261)' 
+    LHOST = '127.0.0.1'
+    LPORT = 7261
 
 def main():
     
