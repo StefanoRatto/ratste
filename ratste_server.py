@@ -19,8 +19,6 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 __author__ = "https://github.com/StefanoRatto/"
-__date__ = "2021/05/25"
-__deprecated__ = False
 __license__ = "GPLv3"
 __version__ = "1.0.0"
 
