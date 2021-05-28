@@ -1,42 +1,8 @@
 ![ratste_logo](./images/ratste.png)
 
 # ratste
-General purpose Remote Access Tool written in Python3.
 
-...WIP...
-
-### Client
-* Requirements
-  - Run on Windows, Linux, or MacOS
-  - Developed in Python 3
-  - Use only Python Modules in Standard Library only
-* Features
-  - A mechanism to retrieve commands from the Server
-  - A mechanism to execute retrieved commands
-  - A mechanism to deliver the command results back to the Server
-* Extra Mile
-  - Develop a compiled client (C/C++, Golang, C# etc)
-  - Leverage OOP
-  - Obfuscate or encrypt client side code
-  - Obfuscate or encrypt command & control traffic
-  - Capable of traversing a web proxy
-
-### Server
-* Requirements 
-  - Run on Linux
-  - Developed in Python 3
-  - Use only Python Modules in Standard Library only
-* Features
-  - A mechanism to queue tasks for clients
-  - A mechanism to deliver commands to a client
-  - A mechanism to display results of a command returned by the client
-  - Long term storage of commands and subsequent results
-* Extra Mile
-  - Leverage OOP
-  - Configurable Server
-    + Bind port
-    + Bind IP
-    + Database Backend
+General purpose cross platform Remote Access Tool written in Python3.
 
 ## System Requirements
 
@@ -48,6 +14,8 @@ Clone the GitHub repo with:
 
 ```Bash
 git clone https://github.com/StefanoRatto/rat-by-raste.git
+cd ratste
+export RATSTE_HOME=$(pwd)
 ```
 
 The server and client components are single Python .py files and can be moved to and executed from anywhere in the file system.
@@ -56,7 +24,39 @@ The client component must be delivered to and invoked on the target machine(s) w
 
 ## Usage
 
-...WIP...
+### Server component:
+
+The server can be launched either without any parameter (in which case the default values of IP address 127.0.0.1 and port 7261 will be used): 
+
+```Bash
+cd $RATSTE_HOME
+./ratste_server.py
+```
+
+or specifying custom bind IP address and port (in the example IP address 192.168.1.10 and port 4444):
+
+```Bash
+cd $RATSTE_HOME
+./ratste_server.py 192.168.1.10 4444
+```
+
+### Client component:
+
+The client can be launched either without any parameter (in which case the default values of IP address 127.0.0.1 and port 7261 will be used for the server to connect to): 
+
+```Bash
+cd $RATSTE_HOME
+./ratste_client.py
+```
+
+or specifying custom server IP address and port (in the example IP address 192.168.1.10 and port 4444):
+
+```Bash
+cd $RATSTE_HOME
+./ratste_client.py 192.168.1.10 4444
+```
+
+
 
 ## Compiled (Native) Client Executables
 
@@ -65,6 +65,7 @@ Native client executables can be created with [PyInstaller](http://www.pyinstall
 This process has been tested and validated on all three platforms and it is recommended to run PyInstaller from within the $RATSTE_HOME/bin folder:
 
 ```Bash
+cd $RATSTE_HOME
 pyinstaller --onefile ../ratste_client.py
 ```
 
