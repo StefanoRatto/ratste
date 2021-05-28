@@ -10,7 +10,7 @@ Both client and server components require Python 3, Standard Library only.
 
 ## Installation
 
-Clone the GitHub repo with:
+Clone the GitHub repo and move into the ratste `$HOME` folder with:
 
 ```Bash
 git clone https://github.com/StefanoRatto/rat-by-raste.git
@@ -18,7 +18,7 @@ cd ratste
 export RATSTE_HOME=$(pwd)
 ```
 
-The server and client components are single Python .py files and can be moved to and executed from anywhere in the file system.
+The server and client components are single Python `.py` files and can be moved to and executed from anywhere in the file system.
 
 The client component must be delivered to and invoked on the target machine(s) with the help of strategies and tools that are outside of the scope of the tool itself.
 
@@ -26,14 +26,14 @@ The client component must be delivered to and invoked on the target machine(s) w
 
 ### Server component:
 
-The server can be launched either without any parameter (in which case the default values of IP address 127.0.0.1 and port 7261 will be used): 
+The server can be launched either without any parameter (in which case the default values of IP address `127.0.0.1` and port `7261` will be used): 
 
 ```Bash
 cd $RATSTE_HOME
 ./ratste_server.py
 ```
 
-or specifying custom bind IP address and port (in the example IP address 192.168.1.10 and port 4444):
+or specifying custom bind IP address and port (in the example IP address `192.168.1.10` and port `4444`):
 
 ```Bash
 cd $RATSTE_HOME
@@ -42,14 +42,14 @@ cd $RATSTE_HOME
 
 ### Client component:
 
-The client can be launched either without any parameter (in which case the default values of IP address 127.0.0.1 and port 7261 will be used for the server to connect to): 
+The client can be launched either without any parameter (in which case the default values of IP address `127.0.0.1` and port `7261` will be used for the server to connect to): 
 
 ```Bash
 cd $RATSTE_HOME
 ./ratste_client.py
 ```
 
-or specifying custom server IP address and port (in the example IP address 192.168.1.10 and port 4444):
+or specifying custom server IP address and port (in the example IP address `192.168.1.10` and port `4444`):
 
 ```Bash
 cd $RATSTE_HOME
@@ -62,18 +62,18 @@ cd $RATSTE_HOME
 
 Native client executables can be created with [PyInstaller](http://www.pyinstaller.org/) on all supported platforms (Microsoft Windows, Mac OS X, Linux). 
 
-This process has been tested and validated on all three platforms and it is recommended to run PyInstaller from within the $RATSTE_HOME/bin folder:
+This process has been tested and validated on all three platforms and it is recommended to run PyInstaller from within the `$RATSTE_HOME/bin` folder:
 
 ```Bash
 cd $RATSTE_HOME
 pyinstaller --onefile ../ratste_client.py
 ```
 
-Once PyInstaller has worked its magic, the platform native single file executable can be found in the $RATSTE_HOME/bin/dist folder.
+Once PyInstaller has worked its magic, the platform native single file executable can be found in the `$RATSTE_HOME/bin/dist` folder.
 
 ## Encoding and obfuscation
 
-By design, base64 encoding of all communications between client and server has been preferred over encryption.
+By design, `base64` encoding of all communications between client and server has been preferred over encryption.
 
 ## Licensing
 
