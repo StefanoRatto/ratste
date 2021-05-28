@@ -40,7 +40,7 @@ cd $RATSTE_HOME
 ./ratste_server.py 192.168.1.10 4444
 ```
 
-Once executed, the server can be interacted with via command line in the console. The server starts listening for a client to check-in and, once the server receives the connection from the client, the server immediately sends to the client the `host_discovery` command, so that the server is able to show which OS platform is the client running on (together with other useful information). This information is essential for the operator to successfully interact with the client, since the server provides the operator with a command prompt that gives access not to a arbitrary and pre-defined list of available commands, but the operator has now access to all native commands offered by the OS platform the client is running on.
+Once executed, the server can be interacted with via command line in the console. The server starts listening for a client to check-in and, once the server receives the connection from the client, the server immediately sends to the client the `client_discovery` command. In this way, the server is able to show which OS platform is the client running on (together with other useful information) and this information is essential for the operator to successfully interact with the client, because the server provides the operator with a command prompt that gives access not to an arbitrary and pre-defined list of available commands, but to all native commands offered by the OS platform the client is running on.
 
 ### Client:
 
