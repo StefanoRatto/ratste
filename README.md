@@ -4,9 +4,9 @@
 
 General purpose cross platform Remote Access Tool written in Python3.
 
-## System Requirements
+## Requirements
 
-Both client and server components require Python 3, Standard Library only.
+Both client and server components require Python 3 and only the Python Standard Library.
 
 ## Installation
 
@@ -24,7 +24,7 @@ The client component must be delivered to and invoked on the target machine(s) w
 
 ## Usage
 
-### Server component:
+### Server:
 
 The server can be launched either without any parameter (in which case the default values of IP address `127.0.0.1` and port `7261` will be used): 
 
@@ -40,7 +40,9 @@ cd $RATSTE_HOME
 ./ratste_server.py 192.168.1.10 4444
 ```
 
-### Client component:
+Once executed, the server can be interacted with via command line in the console. The server starts listening for a client to check-in and, once the server receives the connection from the client, the server immediately sends to the client the `host_discovery` command, so that the server is able to show which OS platform is the client running on (together with other useful information). This information is essential for the operator to successfully interact with the client, since the server provides the operator with a command prompt that gives access not to a arbitrary and pre-defined list of available commands, but the operator has now access to all native commands offered by the OS platform the client is running on.
+
+### Client:
 
 The client can be launched either without any parameter (in which case the default values of IP address `127.0.0.1` and port `7261` will be used for the server to connect to): 
 
@@ -56,9 +58,9 @@ cd $RATSTE_HOME
 ./ratste_client.py 192.168.1.10 4444
 ```
 
+Once executed, the client does not require any interaction, nor produces any output. The client can executed and then be sent to beckground.
 
-
-## Compiled (Native) Client Executables
+## Compiled (native) client executables
 
 Native client executables can be created with [PyInstaller](http://www.pyinstaller.org/) on all supported platforms (Microsoft Windows, Mac OS X, Linux). 
 
@@ -73,13 +75,13 @@ Once PyInstaller has worked its magic, the platform native single file executabl
 
 ## Encoding and obfuscation
 
-By design, `base64` encoding of all communications between client and server has been preferred over encryption.
+By design, `base64` encoding of all communications between client and server has been preferred over encryption. Communication occours over raw network sockets.
 
 ## Licensing
 
 The tool is licensed under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-## Legal Disclaimer
+## Legal disclaimer
 
 Usage of this tool to interact with targets without prior mutual consent is illegal. It's the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program. Only use for educational purposes.
 
