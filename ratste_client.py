@@ -3,7 +3,8 @@
 """ 
 ratste's client component.
 
-ratste is a general purpose Remote Access Tool written in Python3.
+ratste is a general purpose multi-platform Remote Access Tool written in 
+Python3.
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -54,7 +55,9 @@ def main():
             sys.exit(0)
         # client_discovery
         elif cmd == 'client_discovery':
-            results = '{}|{}|{}|{}|{}'.format(platform.system(),platform.node(),getpass.getuser(),platform.release(),platform.processor())
+            results = '{}|{}|{}|{}|{}'.format(platform.system(),
+            platform.node(),getpass.getuser(),platform.release(),
+            platform.processor())
             s.sendall(results)
         # any other command
         else:

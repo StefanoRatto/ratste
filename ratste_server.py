@@ -3,7 +3,8 @@
 """ 
 ratste's server component.
 
-ratste is a general purpose Remote Access Tool written in Python3.
+ratste is a general purpose multi-platform Remote Access Tool written in 
+Python3.
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
