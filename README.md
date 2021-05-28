@@ -2,7 +2,7 @@
 
 # ratste
 
-General purpose cross platform Remote Access Tool written in Python3.
+General purpose multi-platform Remote Access Tool written in Python3.
 
 ## Requirements
 
@@ -13,7 +13,7 @@ Both client and server components require Python 3 and only the Python Standard 
 Clone the GitHub repo and move into the ratste `$HOME` folder with:
 
 ```Bash
-git clone https://github.com/StefanoRatto/rat-by-raste.git
+git clone https://github.com/StefanoRatto/ratste
 cd ratste
 export RATSTE_HOME=$(pwd)
 ```
