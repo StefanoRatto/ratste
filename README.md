@@ -40,27 +40,58 @@ General purpose Remote Access Tool written in Python3.
 
 ## System Requirements
 
-Both client and server components require Python 3.
+Both client and server components require Python 3, Standard Library only.
 
 ## Installation
 
-...WIP...
+Clone the GitHub repo with:
 
 ```Bash
 git clone https://github.com/StefanoRatto/rat-by-raste.git
 ```
 
+The server and client components are single Python .py files and can be moved to and executed from anywhere in the file system.
+
+The client component must be delivered to and invoked on the target machine(s) with the help of strategies and tools that are outside of the scope of the tool itself.
+
 ## Usage
 
 ...WIP...
+
+## Compiled (Native) Client Executables
+
+Native client executables can be created with [PyInstaller](http://www.pyinstaller.org/) on all supported platforms (Microsoft Windows, Mac OS X, Linux). 
+
+This process has been tested and validated on all three platforms and it is recommended to run PyInstaller from within the $RATSTE_HOME/bin folder:
+
+```Bash
+pyinstaller --onefile ../ratste_client.py
+```
+
+Once PyInstaller has worked its magic, the platform native single file executable can be found in the $RATSTE_HOME/bin/dist folder.
+
+## Encoding and obfuscation
+
+By design, base64 encoding of all communications between client and server has been preferred over encryption.
 
 ## Licensing
 
 The tool is licensed under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-## Scrapbook
+## Legal Disclaimer
 
-* https://null-byte.wonderhowto.com/how-to/program-your-own-little-rat-part-1-getting-server-working-0167490/
-* https://dev.to/tman540/simple-remote-backdoor-with-python-33a0
-* https://github.com/yed3926/basicRAT
-* https://github.com/awesome-security/basicRAT
+Usage of this tool to interact with targets without prior mutual consent is illegal. It's the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program. Only use for educational purposes.
+
+## TODOs
+
+* Client
+  - Develop a compiled client (C/C++, Golang, C# etc)
+  - Leverage OOP
+  - Obfuscate or encrypt client side code
+  - Capable of traversing a web proxy
+
+* Server
+  - A mechanism to queue tasks for clients
+  - Long term storage of commands and subsequent results
+  - Leverage OOP
+  - Database Backend

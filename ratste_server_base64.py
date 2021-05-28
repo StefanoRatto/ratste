@@ -52,7 +52,6 @@ def main():
 
     conn.send('hostname')
     client = conn.recv(4096).rstrip()
-    
     print 'ratste > check-in by {}'.format(client)
 
     while True:
