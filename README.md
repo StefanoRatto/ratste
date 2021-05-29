@@ -77,6 +77,10 @@ Once PyInstaller has worked its magic, the platform native single file executabl
 
 By design, `base64` encoding of all communications between client and server has been preferred over encryption. Communication occours over raw TCP sockets.
 
+## Logging
+
+The tool offers basic logging. A log file is created for each server session in the `$RATSTE_HOME/logs` folder and contains the entire output of the session (server output, user commands and client responses).
+
 ## Licensing
 
 The tool is licensed under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html).
@@ -88,13 +92,10 @@ Usage of this tool to interact with targets without prior mutual consent is ille
 ## TODOs
 
 * Client
-  - Develop a compiled client (C/C++, Golang, C# etc)
-  - Leverage OOP
+  - Develop a compiled client
   - Obfuscate or encrypt client side code
   - Capable of traversing a web proxy
 
 * Server
   - A mechanism to queue tasks for clients
-  - Long term storage of commands and subsequent results
-  - Leverage OOP
   - Database Backend
