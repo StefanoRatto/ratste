@@ -75,7 +75,7 @@ Once PyInstaller has worked its magic, the platform native single file executabl
 
 ## Encoding and obfuscation
 
-By design, `base64` encoding of all communications between client and server has been preferred over encryption. Communication occours over raw network sockets.
+By design, `base64` encoding of all communications between client and server has been preferred over encryption. Communication occours over raw TCP sockets.
 
 ## Licensing
 
