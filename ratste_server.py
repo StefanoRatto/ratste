@@ -3,7 +3,7 @@
 """ 
 ratste's server component.
 
-ratste is a general purpose multi-platform Remote Access Tool written in 
+ratste is a general purpose multi-platform Remote Access Tool written in
 Python3.
 
 This program is free software: you can redistribute it and/or modify it under
@@ -11,9 +11,9 @@ the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
 version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>.
@@ -27,6 +27,7 @@ import socket
 import sys
 import base64
 import logging
+import time
 import datetime
 
 try:
@@ -62,14 +63,17 @@ def main():
         print 'ratste > network error, exiting...'
         sys.exit(1)
 
-    log_file = 'logs/ratste-{}.log'.format(datetime.datetime.now()).replace(" ", "_")
-    logging.basicConfig(filename=log_file, level=logging.INFO)
+    log_file = ('logs/ratste-{}_UTC.log'.
+        format(datetime.datetime.utcnow()).replace(" ", "_"))
+    logging.Formatter.converter = time.gmtime
+    logging.basicConfig(format='%(asctime)s.%(msecs)03d_UTC %(message)s', 
+        datefmt="%Y-%m-%d_%H:%M:%S", filename=log_file, level=logging.DEBUG)
 
     print 'ratste > server listening on {}:{}'.format(LHOST, LPORT)
-    logging.info('ratste > server listening on {}:{}'.format(LHOST, LPORT))
+    logging.debug('ratste > server listening on {}:{}'.format(LHOST, LPORT))
     print 'ratste > session log file: {}'.format(log_file)
     print 'ratste > type "quit" or ctrl-c to exit'
-    logging.info('ratste > type "quit" or ctrl-c to exit')
+    logging.debug('ratste > type "quit" or ctrl-c to exit')
 
     connection, _ = tcp_socket.accept()
 
@@ -78,19 +82,19 @@ def main():
     platform, hostname, user, version, arch = client_info.split('|')
 
     print 'ratste > check-in by {}@{}'.format(user, hostname)
-    logging.info('ratste > check-in by {}@{}'.format(user, hostname))
+    logging.debug('ratste > check-in by {}@{}'.format(user, hostname))
     print 'Platform: {}'.format(platform)
-    logging.info('Platform: {}'.format(platform))
+    logging.debug('Platform: {}'.format(platform))
     print 'Version: {}'.format(version)
-    logging.info('Version: {}'.format(version))
+    logging.debug('Version: {}'.format(version))
     print 'Architecture: {}\n'.format(arch)
-    logging.info('Architecture: {}\n'.format(arch))
+    logging.debug('Architecture: {}\n'.format(arch))
 
     while True:
         command = raw_input('ratste ~ {}@{} > '.format(user, 
             hostname)).rstrip()
-        logging.info(str('ratste ~ {}@{} > {}'.format(user, hostname, 
-            command)).rstrip())
+        logging.debug(str('ratste ~ {}@{} > {}'.format(user, 
+            hostname, command)).rstrip())
 
         # allow noop
         if command == '':
@@ -106,7 +110,7 @@ def main():
 
         data = decode(connection.recv(4096))
         print data
-        logging.info(data)
+        logging.debug(data)
 
 if __name__ == '__main__':
     main()

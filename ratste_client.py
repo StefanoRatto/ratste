@@ -69,9 +69,9 @@ def main():
             sys.exit(0)
         # client_discovery
         elif command == 'client_discovery':
-            results = '{}|{}|{}|{}|{}'.format(platform.system(),
-                platform.node(),getpass.getuser(),platform.release(),
-                platform.processor())
+            results = ('{}|{}|{}|{}|{}'.format(platform.system(), 
+                platform.node(), getpass.getuser(), platform.release(), 
+                platform.processor()))
             tcp_socket.sendall(encode(results))
         # any other command
         else:
