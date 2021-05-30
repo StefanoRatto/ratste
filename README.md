@@ -2,15 +2,15 @@
 
 # ratste
 
-General purpose multi-platform Remote Access Tool written in Python3.
+A basic general purpose multi-platform Remote Access Tool written in Python3.
 
 ## Requirements
 
-Both client and server components require Python 3 and only the Python Standard Library.
+Both client and server components require Python 3, but only the Python Standard Library.
 
 ## Installation
 
-Clone the GitHub repo and move into the ratste `$HOME` folder with:
+Clone the GitHub repo and move into the `RATSTE_HOME` folder with:
 
 ```Bash
 git clone https://github.com/StefanoRatto/ratste
