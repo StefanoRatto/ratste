@@ -79,7 +79,7 @@ By design, `base64` encoding of all communications between client and server has
 
 ## Logging
 
-The tool offers basic logging. A log file is created for each server session in the `$RATSTE_HOME/logs` folder and contains the entire output of the session (server output, user commands and client responses).
+The tool offers basic logging. A log file is created for each server session in the `$RATSTE_HOME/logs` folder and contains the entire output of the session (server output, user commands and client responses). Log file names and timestamps are in UTC.
 
 ## Licensing
 
