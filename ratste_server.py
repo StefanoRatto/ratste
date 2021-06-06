@@ -57,6 +57,7 @@ def main():
     
     try:
         tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         tcp_socket.bind((LHOST, LPORT))
         tcp_socket.listen(10)
     except:
@@ -101,10 +102,21 @@ def main():
             continue
 
         # send command to client
-        connection.send(encode(command))
+        try:
+            connection.send(encode(command))
+        except:
+            # connection to client lost
+            print ('ratste > connection to {} lost, exiting...'
+                .format(hostname))
+            logging.debug('ratste > connection to {} lost, exiting...'
+                .format(hostname))
+            tcp_socket.close()
+            sys.exit(0)
 
         # stop server
         if command == 'quit':
+            print 'ratste > exiting, bye'
+            logging.debug('ratste > exiting, bye')
             tcp_socket.close()
             sys.exit(0)
 
@@ -113,4 +125,9 @@ def main():
         logging.debug(data)
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print '\nratste > exiting, bye'
+        logging.debug('\nratste > exiting, bye')
+        sys.exit(0)
