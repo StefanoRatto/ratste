@@ -78,7 +78,7 @@ Native client executables can be created with [PyInstaller](http://www.pyinstall
 This process has been tested and validated on all three platforms and it is recommended to run PyInstaller from within the `$RATSTE_HOME/bin` folder:
 
 ```Bash
-cd $RATSTE_HOME
+cd $RATSTE_HOME/bin
 pyinstaller --onefile ../ratste_client.py
 ```
 
@@ -104,7 +104,6 @@ Usage of this tool to interact with targets without prior mutual consent is ille
 
 * Client
   - Develop a compiled client
-  - Obfuscate or encrypt client side code
   - Capable of traversing a web proxy
 
 * Server
