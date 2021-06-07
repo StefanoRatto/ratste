@@ -60,6 +60,17 @@ cd $RATSTE_HOME
 
 Once executed, the client does not require any interaction, nor produces any output. The client can executed and then be sent to beckground.
 
+## Obfuscated client module
+
+An obfuscated (bytecode) version of the client module can be created with the command:
+
+```Bash
+cd $RATSTE_HOME
+python -OO -m py_compile ratste_client.py
+```
+
+This results in a `ratste_client.pyo` file that can be executed exactly like the unobfuscated version `ratste_client.py`.
+
 ## Compiled (native) client executables
 
 Native client executables can be created with [PyInstaller](http://www.pyinstaller.org/) on all supported platforms (Microsoft Windows, Mac OS X, Linux). 
