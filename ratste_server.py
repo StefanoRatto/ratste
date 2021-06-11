@@ -29,6 +29,14 @@ import base64
 import logging
 import time
 import datetime
+import rsa
+import pickle
+from cryptography.fernet import Fernet
+import hashlib
+import time
+
+# Use the automatic reply function of the Turing robot
+from tlrobot import get_reply
 
 def encode(plain_message):
     plain_message_bytes = plain_message.encode('ascii')
