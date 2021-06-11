@@ -1,5 +1,3 @@
-![ratste_logo](./images/ratste.png)
-
 # ratste
 
 A basic general purpose multi-platform Remote Access Tool written in Python3.
