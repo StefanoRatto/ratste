@@ -30,9 +30,6 @@ import logging
 import time
 import datetime
 
-# Use the automatic reply function of the Turing robot
-from tlrobot import get_reply
-
 def encode(plain_message):
     plain_message_bytes = plain_message.encode('ascii')
     base64_message_bytes = base64.b64encode(plain_message_bytes)
